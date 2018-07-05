@@ -66,6 +66,5 @@ int removeCircularListData(CircularList *pList, int position) {
         pList->headerNode.pLink = NULL;
     }
     free(pDelNode);
-
     return 0;
 }
