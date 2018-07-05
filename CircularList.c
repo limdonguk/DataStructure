@@ -69,4 +69,3 @@ int removeCircularListData(CircularList *pList, int position) {
 
     return 0;
 }
-
