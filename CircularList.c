@@ -42,7 +42,7 @@ int addCircularListData(CircularList *pList, int position, int data) {
     pPreNode->pLink = pNewNode;
 
     pList->currentCount++;
-    if(pNewNode->pLink == NULL) {
+    if(pNewNode->pLink == NULL) {    // 제일 첫 번째 노드 생성시 자기자신을 가르킴
         pNewNode->pLink = pNewNode;
     }
 
@@ -66,5 +66,53 @@ int removeCircularListData(CircularList *pList, int position) {
         pList->headerNode.pLink = NULL;
     }
     free(pDelNode);
+    return 0;
+}
+
+void deleteCircularList(CircularList* pList) {
+    CircularListNode *pDelNode = NULL;
+    CircularListNode *pPreNode = pList->headerNode.pLink;
+    for(int i=0; i<pList->currentCount; i++) {
+        pDelNode = pPreNode;
+        pPreNode = pPreNode->pLink;
+        free(pDelNode);
+    }
+    free(pList);
+}
+
+void displayCircularList(CircularList* pList) {
+    CircularListNode *pNode = NULL;
+    pNode = pList->headerNode.pLink;
+    if(pList->currentCount == 0) {
+        printf("자료가 없습니다.");
+    } else {
+        printf("노드 개수 : %d\n",pList->currentCount);
+        for(int i=0; i<pList->currentCount; i++) {
+            printf("[%d], %d\n",i ,pNode->data);
+            pNode = pNode->pLink;
+        }
+    }
+}
+
+int main(int argc, char* argv[]) {
+    CircularList *pList = NULL;
+    pList = createCircluarList();
+
+    addCircularListData(pList, 0, 10);
+    displayCircularList(pList);
+    addCircularListData(pList, 0, 20);
+    displayCircularList(pList);
+    addCircularListData(pList, 1, 30);
+    displayCircularList(pList);
+
+    removeCircularListData(pList,2);
+    displayCircularList(pList);
+    removeCircularListData(pList,1);
+    displayCircularList(pList);
+    removeCircularListData(pList,0);
+    displayCircularList(pList);
+
+    deleteCircularList(pList);
+
     return 0;
 }

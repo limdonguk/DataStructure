@@ -21,7 +21,7 @@ ArrayList *createList(int count) {
 		if (pReturn != NULL) {
 			pReturn->maxCount = count;
 			pReturn->currentCount = 0;
-			pReturn->pData = (ArrayListNode*)malloc(sizeof(ArrayListNode)*count);
+			pReturn->pData = NULL;
 		}
 		else {
 			printf("오류, 메모리할당 실패\n");
@@ -84,7 +84,6 @@ int removeListData(ArrayList *pList, int position) {
 				pList->pData[i] = pList->pData[i + 1];
 			}
 			pList->currentCount--;
-
 		}
 		else {
 			printf("오류, 위치 인덱스 범위 초과 removeListData\n");
