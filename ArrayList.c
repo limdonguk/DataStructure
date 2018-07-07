@@ -16,7 +16,7 @@ typedef struct ArrayListType
 } ArrayList;
 
 // createList() : 리스트 생성
-ArrayList *createList(int count)
+ArrayList *createList(int count) 
 {
     ArrayList *pReturn = NULL;
     if (count > 0)
