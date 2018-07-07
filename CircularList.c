@@ -1,3 +1,5 @@
+// CircularList.c
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -93,7 +95,7 @@ void deleteCircularList(CircularList *pList)
     free(pList);
 }
 
-void displayCircularList(CircularList *pList)
+void displayCircularList(CircularList *pList) 
 {
     CircularListNode *pNode = NULL;
     pNode = pList->headerNode.pLink;
@@ -101,7 +103,7 @@ void displayCircularList(CircularList *pList)
     {
         printf("자료가 없습니다.");
     }
-    else
+    else 
     {
         printf("노드 개수 : %d\n", pList->currentCount);
         for (int i = 0; i < pList->currentCount; i++)
