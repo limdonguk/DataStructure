@@ -6,3 +6,5 @@
 4. CircularList     - 2018. 07. 06
 5. DoublyList       - 2018. 07. 06
 6. Polynomia        - 2018. 07. 07
+7. ArrayStack       - 2018. 07. 09
+8. LinkedStack      - 2018. 07. 09
