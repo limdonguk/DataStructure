@@ -13,15 +13,20 @@ typedef struct ArrayStackType {
 } ArrayStack;
 
 ArrayStack* createArrayStack(int size) {
-	ArrayStack *pReturn = NULL;
-	pReturn = (ArrayStack*)malloc(sizeof(ArrayStack));
-	memset(pReturn, 0, sizeof(ArrayStack));
-	pReturn->maxCount = size;
-
-	pReturn->pData = (ArrayStackNode*)malloc(sizeof(ArrayStackNode)*size);
-	memset(pReturn->pData, 0, sizeof(ArrayStackNode)*size);
-
-	return pReturn;
+    ArrayStack *pReturn = NULL;
+    if(size >= 0) {
+        pReturn = (ArrayStack*)malloc(sizeof(ArrayStack));
+        if(pReturn != NULL) {
+            memset(pReturn, 0, sizeof(ArrayStack));
+            pReturn->maxCount = size;
+            
+            pReturn->pData = (ArrayStackNode*)malloc(sizeof(ArrayStackNode)*size);
+            if(pReturn->pData != NULL) {
+                memset(pReturn->pData, 0, sizeof(ArrayStackNode)*size);
+            }
+        }
+    }
+    return pReturn;
 }
 
 int isArrayStackFull(ArrayStack* pStack) {
