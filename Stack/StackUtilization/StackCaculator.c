@@ -2,6 +2,121 @@
 #include <stdlib.h>
 #include "exprlinkedstack.h"
 
+int inStackPrecedence(Precedence oper) {
+    switch(oper){
+        case lparen:
+            return 0;
+        case rparen:
+            return 4;
+        case multifly:
+        case divide:
+            return 2;
+        case plus:
+        case minus:
+            return 1;
+    }
+    return -1;
+}
+
+int outStackPrecedence(Precedence oper) {
+    switch(oper) {
+        case lparen:
+            return 5;
+        case rparen:
+            return 4;
+        case multifly:
+        case divide:
+            return 2;
+        case plus:
+        case minus:
+            return 1;
+    }
+    return -1;
+}
+
+void printToken(ExprToken element) {
+    switch(element.type) {
+        case lparen:
+            printf("( ");
+            break;
+        case rparen:
+            printf(") ");
+            break;
+        case plus:
+            printf("+ ");
+            break;
+        case minus:
+            printf("- ");
+            break;
+        case multifly:
+            printf("* ");
+            break;
+        case divide:
+            printf("/ ");
+            break;
+        case operand:
+            printf("%4.1f ", element.value);
+            break;
+    }
+}
+
+void converInfixToPostfix(ExprToken *pExprTokens, int tokenCount) {
+    LinkedStack *pStack = NULL;
+    LinkedStackNode *pNode = NULL;
+
+    Precedence tokenType, inStackTokenType;
+    int i=0;
+
+    pStack = createLinkedStack();
+    if(pStack != NULL) {
+        for(i = 0; i < tokenCount; i++) {
+            tokenType = pExprTokens[i].type;
+            switch(tokenType) {
+                case operand:
+                    printf("%4.1f\t", pExprTokens[i].value);
+                    break;
+                case rparen:
+                    pNode = popLS(pStack);
+                    while(pNode != NULL && pNode->data.type != lparen) {
+                        printToken(pNode->data);
+                        free(pNode);
+
+                        pNode = popLS(pStack);
+                    } 
+                    if(pNode != NULL) free(pNode);
+                    break;
+                default:
+                    while(isLinkedStackEmpty(pStack) == 0) {
+                        inStackTokenType = peekLS(pStack)->data.type;
+                        if(outStackPrecedence(tokenType) <= inStackPrecedence(inStackTokenType)) {
+                            pNode = popLS(pStack);
+                            if(pNode != NULL) {
+                                printToken(pNode->data);
+                                free(pNode);
+                            }
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                    pushLS(pStack, pExprTokens[i]);
+                    break;
+            }
+        }
+
+        while(isLinkedStackEmpty(pStack) == 0) {
+            pNode = popLS(pStack);
+            if(pNode != NULL) {
+                printToken(pNode->data);
+                free(pNode);
+            }
+        }
+
+        deleteLinkedStack(pStack);
+    }
+} 
+
+
 void calcExpr(ExprToken *pExprTokens, int tokenCount) {
     LinkedStack *pStack = NULL;
     LinkedStackNode *pNode1 = NULL, *pNode2 = NULL;
@@ -67,24 +182,30 @@ void calcExpr(ExprToken *pExprTokens, int tokenCount) {
 int main(int argc, char* argv[]) {
     int i=0;
 
-    ExprToken *pExprTokens = (ExprToken *)malloc(sizeof(ExprToken)*7);
+    ExprToken *pExprTokens = (ExprToken *)malloc(sizeof(ExprToken)*9);
     pExprTokens[0].type = operand;
     pExprTokens[0].value = 2;
-    pExprTokens[1].type = operand;
-    pExprTokens[1].value = 3;
-    pExprTokens[2].type = operand;
-    pExprTokens[2].value = 4;
-    pExprTokens[3].type = plus;
-    pExprTokens[3].value = 0;
-    pExprTokens[4].type = operand;
-    pExprTokens[4].value = 5;
-    pExprTokens[5].type = multifly;
-    pExprTokens[5].value = 0;
-    pExprTokens[6].type = minus;
+    pExprTokens[1].type = minus;
+    pExprTokens[1].value = 0;
+    pExprTokens[2].type = lparen;
+    pExprTokens[2].value = 0;
+    pExprTokens[3].type = operand;
+    pExprTokens[3].value = 3;
+    pExprTokens[4].type = plus;
+    pExprTokens[4].value = 0;
+    pExprTokens[5].type = operand;
+    pExprTokens[5].value = 4;
+    pExprTokens[6].type = rparen;
     pExprTokens[6].value = 0;
+    pExprTokens[7].type = multifly;
+    pExprTokens[7].value = 0;
+    pExprTokens[8].type = operand;
+    pExprTokens[8].value = 5;
+    
+    printf("Infix Expression : 2.0 - (3.0 + 4.0) * 5.0 \n");
+    printf("Postfix Expression : \n");
 
-    printf("Expression : 2 3 4 + 5 * - \n");
-    calcExpr(pExprTokens, 7);
+    converInfixToPostfix(pExprTokens, 9);
 
     free(pExprTokens);
 
