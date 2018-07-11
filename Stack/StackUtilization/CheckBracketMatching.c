@@ -33,7 +33,9 @@ int checkBracketMatching(char *pSource)
                 else
                 {
                     checkSymbol = pNode->data;
-                    if ((symbol == ')' && checkSymbol == '(') || (symbol == '}' && checkSymbol == '{') || (symbol == ']' && checkSymbol == '['))
+                    if ((symbol == ')' && checkSymbol == '(') 
+                        || (symbol == '}' && checkSymbol == '{')
+                        || (symbol == ']' && checkSymbol == '['))
                     {
                     }
                     else
