@@ -33,7 +33,8 @@ int isArrayQueueFull(ArrayQueue* pQueue) {
     int ret = 0;
 
     if(pQueue != NULL) {
-        if(pQueue->currentCount == pQueue->maxCount) {
+        if(pQueue->currentCount == pQueue->maxCount
+           ||pQueue->rear == pQueue->maxCount-1) {
             ret = 1;
         }
     }
