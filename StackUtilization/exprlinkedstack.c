@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include "exprlinkedstack.h"
+#include "exprlinkedstack.h" 
 
 LinkedStack *createLinkedStack()
 {
