@@ -94,7 +94,7 @@ void deleteLinkedStack(LinkedStack *pStack)
 	if (pStack != NULL)
 	{
 		pNode = pStack->pTop;
-		while (pNode != NULL)
+		while (pNode != NULL) 
 		{
 			pDelNode = pNode;
 			pNode = pNode->pLink;
