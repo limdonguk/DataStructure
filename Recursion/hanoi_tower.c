@@ -11,3 +11,12 @@ void hanoi_tower(int n, char from, char to, char temp) {
     }
 }
 
+int main(int argc, char* argv[]) {
+    char from = 'A';
+    char temp = 'B';
+    char to = 'C';
+
+    hanoi_tower(4, from, temp, to);
+
+    return 0;
+}
