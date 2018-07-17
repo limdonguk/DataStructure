@@ -49,6 +49,7 @@ void pastorderTraversalRecursiveBinTree(BinTree *pBinTree) {
         printf("\n");
     }
 }
+//------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
     BinTree *pBinTree = NULL;
