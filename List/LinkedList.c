@@ -47,27 +47,24 @@ int addLinkedListData(LinkedList *pList, int position, int data)
 {
     if (pList != NULL)
     { // 리스트 점검
-        if (position > 0 && position <= pList->currentCount)
-        { // 입력 Parameter의 유효값 점검
-            int i = 0;
-            LinkedListNode *pNewNode = NULL;
-            LinkedListNode *pPreNode = NULL;
+        int i = 0;
+        LinkedListNode *pNewNode = NULL;
+        LinkedListNode *pPreNode = NULL;
 
-            pNewNode = (LinkedListNode *)malloc(sizeof(LinkedListNode));
-            pNewNode->data = data;
+        pNewNode = (LinkedListNode *)malloc(sizeof(LinkedListNode));
+        pNewNode->data = data;
 
-            pPreNode = &(pList->headerNode); //헤더 노드 부터 입력한 position의 '이전노드'까지 이동.
-            for (i = 0; i < position; i++)
-            {
-                pPreNode = pPreNode->pLink;
-            }
-
-            pNewNode->pLink = pPreNode->pLink; // 다음 노드의 처리
-            pPreNode->pLink = pNewNode;        // 이전 노드의 처리
-            pList->currentCount++;             // 현재 노드 개수 1개 증가.
-
-            return 0;
+        pPreNode = &(pList->headerNode); //헤더 노드 부터 입력한 position의 '이전노드'까지 이동.
+        for (i = 0; i < position; i++)
+        {
+            pPreNode = pPreNode->pLink;
         }
+
+        pNewNode->pLink = pPreNode->pLink; // 다음 노드의 처리
+        pPreNode->pLink = pNewNode;        // 이전 노드의 처리
+        pList->currentCount++;             // 현재 노드 개수 1개 증가.
+
+        return 0;
     }
 }
 
